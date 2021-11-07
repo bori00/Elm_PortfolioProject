@@ -276,5 +276,4 @@ compareMonth m1 m2 =
 -}
 monthsBetweenMonths : Month -> Month -> Int
 monthsBetweenMonths m1 m2 =
-    -- 0
-    Debug.todo "Implement Date.monthsBetweenMonths"
+    abs (monthToInt m1 - monthToInt m2)

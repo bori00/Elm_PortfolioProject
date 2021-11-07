@@ -60,6 +60,7 @@ monthsBetween dA dB =
         case (mMonthA, mMonthB) of
             (Just monthA, Just monthB) ->
                 Just (abs ((monthsSince1AD yearA monthA) - (monthsSince1AD yearB monthB)))
+            (Nothing, Nothing) -> Just (abs (yearA - yearB))
             (_, _) -> Nothing
 
 {-| Given an integer representing a year and a Month, returns the total number of

@@ -51,9 +51,23 @@ The month fields are handled as follows:
 -}
 monthsBetween : Date -> Date -> Maybe Int
 monthsBetween dA dB =
-    -- Nothing
-    Debug.todo "Implement Date.monthsBetween"
+    let
+        (Date dateA) = dA
+        (Date dateB) = dB
+        (mMonthA, yearA) = (dateA.month, dateA.year)
+        (mMonthB, yearB) = (dateB.month, dateB.year)
+    in
+        case (mMonthA, mMonthB) of
+            (Just monthA, Just monthB) ->
+                Just (abs ((monthsSince1AD yearA monthA) - (monthsSince1AD yearB monthB)))
+            (_, _) -> Nothing
 
+{-| Given an integer representing a year and a Month, returns the total number of
+ months passed since January 1, AD until the given date.
+-}
+monthsSince1AD : Int -> Month -> Int
+monthsSince1AD y m =
+    y * 12 + (monthToInt m)
 
 {-| Compares two dates.
 First, dates are compared by the year field. If it's equal, the month fields are used as follows:

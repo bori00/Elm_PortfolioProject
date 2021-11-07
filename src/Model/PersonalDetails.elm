@@ -35,7 +35,7 @@ view details =
             h3 [id "socialMediaDivTitle"] [text "Social Media"],
             ul [] <|
                 List.map
-                    (\socialLinkWithName -> li [class "social link"][
+                    (\socialLinkWithName -> li [class "social-link"][
                             a [href socialLinkWithName.detail] [text socialLinkWithName.name]
                         ])
                 details.socials

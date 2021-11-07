@@ -1,6 +1,6 @@
 module Model.Date exposing (Date, Month(..), compare, compareMonth, full, month, monthToString, monthsBetween, monthsBetweenMonths, offsetMonths, onlyYear, view, year)
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div, text, p)
 import Model.Util exposing (chainCompare)
 
 
@@ -135,10 +135,12 @@ offsetMonths months (Date d) =
 
 view : Date -> Html msg
 view (Date d) =
-    div [] []
-    -- Debug.todo "Implement Model.Date.view"
-
-
+    div [] [
+        p [] [text (d.month |> Maybe.map monthToString
+                            |> Maybe.map (String.append ", ")
+                            |> Maybe.withDefault ""
+                            |> String.append (String.fromInt d.year))]
+    ]
 
 -- MONTH
 

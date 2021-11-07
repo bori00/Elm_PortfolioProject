@@ -90,8 +90,14 @@ First, dates are compared by the year field. If it's equal, the month fields are
 -}
 compare : Date -> Date -> Order
 compare (Date d1) (Date d2) =
-    EQ
-    -- Debug.todo "Implement Model.Date.compare"
+    let
+        (mMonth1, year1) = (d1.month, d1.year)
+        (mMonth2, year2) = (d2.month, d2.year)
+    in
+        chainCompare (Basics.compare
+                        (mMonth1 |> Maybe.map monthToInt |> Maybe.withDefault 13)
+                        (mMonth2 |> Maybe.map monthToInt |> Maybe.withDefault 13))
+                     (Basics.compare year1 year2)
 
 
 {-| Given a current date and the number of months, it returns a new date with the given number of months passed.

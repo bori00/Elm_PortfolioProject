@@ -20,5 +20,5 @@ type alias PersonalDetails =
 
 view : PersonalDetails -> Html msg
 view details =
-    -- div [] []
-    Debug.todo "Implement the Model.PersonalDetails.view function"
+    div [] []
+    -- Debug.todo "Implement the Model.PersonalDetails.view function"

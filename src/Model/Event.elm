@@ -35,11 +35,11 @@ categoryView category =
 
 sortByInterval : List Event -> List Event
 sortByInterval events =
-    -- events
-    Debug.todo "Implement Event.sortByInterval"
+    events
+    -- Debug.todo "Implement Event.sortByInterval"
 
 
 view : Event -> Html Never
 view event =
-    -- div [] []
-    Debug.todo "Implement the Model.Event.view function"
+    div [] []
+    -- Debug.todo "Implement the Model.Event.view function"

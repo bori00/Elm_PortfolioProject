@@ -1,6 +1,6 @@
 module Model.Date exposing (Date, Month(..), compare, compareMonth, full, month, monthToString, monthsBetween, monthsBetweenMonths, offsetMonths, onlyYear, view, year)
 
-import Html exposing (Html, text)
+import Html exposing (Html, div, text)
 import Model.Util exposing (chainCompare)
 
 
@@ -90,8 +90,8 @@ First, dates are compared by the year field. If it's equal, the month fields are
 -}
 compare : Date -> Date -> Order
 compare (Date d1) (Date d2) =
-    -- EQ
-    Debug.todo "Implement Model.Date.compare"
+    EQ
+    -- Debug.todo "Implement Model.Date.compare"
 
 
 {-| Given a current date and the number of months, it returns a new date with the given number of months passed.
@@ -128,8 +128,8 @@ offsetMonths months (Date d) =
 
 view : Date -> Html msg
 view (Date d) =
-    -- div [] []
-    Debug.todo "Implement Model.Date.view"
+    div [] []
+    -- Debug.todo "Implement Model.Date.view"
 
 
 

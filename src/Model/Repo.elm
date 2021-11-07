@@ -16,14 +16,14 @@ type alias Repo =
 
 view : Repo -> Html msg
 view repo =
-    -- div [] []
-    Debug.todo "Implement Model.Repo.view"
+    div [] []
+    -- Debug.todo "Implement Model.Repo.view"
 
 
 sortByStars : List Repo -> List Repo
 sortByStars repos =
-    -- []
-    Debug.todo "Implement Model.Repo.sortByStars"
+    []
+    -- Debug.todo "Implement Model.Repo.sortByStars"
 
 
 {-| Deserializes a JSON object to a `Repo`.
@@ -38,5 +38,5 @@ Field mapping (JSON -> Elm):
 -}
 decodeRepo : De.Decoder Repo
 decodeRepo =
-    -- De.fail "Not implemented"
-    Debug.todo "Implement Model.Repo.decodeRepo"
+    De.fail "Not implemented"
+    -- Debug.todo "Implement Model.Repo.decodeRepo"

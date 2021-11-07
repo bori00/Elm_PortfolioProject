@@ -29,8 +29,8 @@ type SelectedEventCategories
 -}
 allSelected : SelectedEventCategories
 allSelected =
-    -- TODOCompleteThisType
-    Debug.todo "Implement Model.Event.Category.allSelected"
+    TODOCompleteThisType
+    -- Debug.todo "Implement Model.Event.Category.allSelected"
 
 
 {-| Given a the current state and a `category` it returns whether the `category` is selected.
@@ -40,8 +40,8 @@ allSelected =
 -}
 isEventCategorySelected : EventCategory -> SelectedEventCategories -> Bool
 isEventCategorySelected category current =
-    -- False
-    Debug.todo "Implement Model.Event.Category.isEventCategorySelected"
+    False
+    -- Debug.todo "Implement Model.Event.Category.isEventCategorySelected"
 
 
 {-| Given an `category`, a boolean `value` and the current state, it sets the given `category` in `current` to `value`.
@@ -53,8 +53,8 @@ isEventCategorySelected category current =
 -}
 set : EventCategory -> Bool -> SelectedEventCategories -> SelectedEventCategories
 set category value current =
-    -- current
-    Debug.todo "Implement Model.Event.Category.set"
+    current
+    -- Debug.todo "Implement Model.Event.Category.set"
 
 
 checkbox : String -> Bool -> EventCategory -> Html ( EventCategory, Bool )
@@ -67,5 +67,5 @@ checkbox name state category =
 
 view : SelectedEventCategories -> Html ( EventCategory, Bool )
 view model =
-    -- div [] []
-    Debug.todo "Implement the Model.Event.Category.view function"
+    div [] []
+    -- Debug.todo "Implement the Model.Event.Category.view function"

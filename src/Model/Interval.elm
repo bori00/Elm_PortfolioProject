@@ -96,8 +96,14 @@ If the `start` field is equal, the they are compare by the `end` fields:
 -}
 compare : Interval -> Interval -> Order
 compare (Interval intA) (Interval intB) =
-    EQ
-    -- Debug.todo "Implement Model.Interval.compare"
+    let
+        default_end_order = case (intA.end, intB.end) of
+                                (Nothing, Nothing) -> EQ
+                                (_, _) -> GT
+    in
+    chainCompare
+        (Maybe.map2 Date.compare intA.end intB.end |> Maybe.withDefault default_end_order)
+        (Date.compare intA.start intB.start)
 
 
 view : Interval -> Html msg

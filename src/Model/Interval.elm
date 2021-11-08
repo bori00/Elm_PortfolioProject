@@ -115,18 +115,19 @@ view interval =
                             Just end -> False
         interval_length_msg = length interval
             |> Maybe.map (\l ->
-                (text ((String.fromInt (Tuple.first(l))) ++ "years, " ++
-                    (String.fromInt (Tuple.second(l)) ++ "months"))))
+                (text ((String.fromInt (Tuple.first(l))) ++ " years, " ++
+                    (String.fromInt (Tuple.second(l)) ++ " months"))))
             |> Maybe.withDefault (text "")
     in
     div [class "interval"] [
-        -- TODO: separate text nodes for start end end date
-        span [class "interval-start"] [Date.view intervalRec.start],
-        text "-",
-        span [class "interval-end"] [intervalRec.end
-                                        |> Maybe.map Date.view
-                                        |> Maybe.withDefault (text "Present")],
-        p [class "interval-length", hidden hide_length] [
-            text "Length: ", interval_length_msg
+        div [style "font-size" "16px"] [
+            span [class "interval-start", style "display" "inline"] [Date.view intervalRec.start],
+            span [style "display" "inline"] [text "  -  "],
+            span [class "interval-end", style "display" "inline"] [intervalRec.end
+                                            |> Maybe.map Date.view
+                                            |> Maybe.withDefault (text "Present")]
+        ],
+        div [class "interval-length", hidden hide_length] [
+            interval_length_msg
         ]
     ]

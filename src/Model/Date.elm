@@ -49,6 +49,7 @@ The month fields are handled as follows:
 ```
 
 -}
+-- TODO: if both missing -> number of years * 12?
 monthsBetween : Date -> Date -> Maybe Int
 monthsBetween dA dB =
     let
@@ -60,7 +61,7 @@ monthsBetween dA dB =
         case (mMonthA, mMonthB) of
             (Just monthA, Just monthB) ->
                 Just (abs ((monthsSince1AD yearA monthA) - (monthsSince1AD yearB monthB)))
-            (Nothing, Nothing) -> Just (abs (yearA - yearB))
+            (Nothing, Nothing) -> Just ((abs (yearA - yearB)) * 12)
             (_, _) -> Nothing
 
 {-| Given an integer representing a year and a Month, returns the total number of
@@ -135,12 +136,11 @@ offsetMonths months (Date d) =
 
 view : Date -> Html msg
 view (Date d) =
-    div [] [
-        p [] [text (d.month |> Maybe.map monthToString
-                            |> Maybe.map (String.append ", ")
-                            |> Maybe.withDefault ""
-                            |> String.append (String.fromInt d.year))]
-    ]
+    text (d.month |> Maybe.map monthToString
+                        |> Maybe.map (String.append ", ")
+                        |> Maybe.withDefault ""
+                        |> String.append (String.fromInt d.year))
+
 
 -- MONTH
 

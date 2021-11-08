@@ -46,8 +46,8 @@ view event =
                             Nothing -> text "Missing"
     in
     div [classList [("event", True), ("event-important", event.important)]] [
-        h1 [class "event-title"] [text event.title],
-        h4 [class "event-interval"] [Interval.view event.interval],
+        h3 [class "event-title"] [text event.title],
+        h5 [class "event-interval"] [Interval.view event.interval],
         p [class "event-description"] [event.description],
         p [class "event-category"] [categoryView event.category],
         p [class "event-url"] [

@@ -71,7 +71,6 @@ set category value current =
                          |> SelectedEventCategories
         else current
 
-
 checkbox : String -> Bool -> EventCategory -> Html ( EventCategory, Bool )
 checkbox name state category =
     div [ style "display" "inline", class "category-checkbox" ]

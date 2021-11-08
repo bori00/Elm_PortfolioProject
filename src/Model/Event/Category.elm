@@ -1,6 +1,6 @@
 module Model.Event.Category exposing (EventCategory(..), SelectedEventCategories, allSelected, eventCategories, isEventCategorySelected, set, view)
 
-import Html exposing (Html, div, input, text)
+import Html exposing (Html, div, input, text, ul)
 import Html.Attributes exposing (checked, class, style, type_)
 import Html.Events exposing (onCheck)
 import List exposing (..)
@@ -82,5 +82,20 @@ checkbox name state category =
 
 view : SelectedEventCategories -> Html ( EventCategory, Bool )
 view model =
-    div [] []
-    -- Debug.todo "Implement the Model.Event.Category.view function"
+    let
+        (SelectedEventCategories selectedList) = model
+    in
+    div [] [
+        ul [] <| ([Academic, Work, Project, Award]
+                    |> List.map (\eventCat -> checkbox (eventCategoryToString eventCat)
+                                            (List.member eventCat selectedList)
+                                            eventCat))
+    ]
+
+eventCategoryToString: EventCategory -> String
+eventCategoryToString eventCat =
+    case eventCat of
+        Academic -> "Academic"
+        Work -> "Work"
+        Project -> "Project"
+        Award -> "Award"

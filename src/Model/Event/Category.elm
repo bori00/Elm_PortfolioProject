@@ -3,6 +3,7 @@ module Model.Event.Category exposing (EventCategory(..), SelectedEventCategories
 import Html exposing (Html, div, input, text)
 import Html.Attributes exposing (checked, class, style, type_)
 import Html.Events exposing (onCheck)
+import List exposing (..)
 
 
 type EventCategory
@@ -16,10 +17,16 @@ eventCategories =
     [ Academic, Work, Project, Award ]
 
 
-{-| Type used to represent the state of the selected event categories
+{-| Type used to represent the state of the selected event categories.
+
+    Although in the background the type is represented by a list, the implementation guarantees
+    that the list is in fact a set: each element occurs exactly once. Given that the list is
+    expected to have length <= 4, this approach does not represent a performance issue, but
+    allows for later extensions (for example, defining a new eventCategory or deleting one of the
+    categories would not require changes in the implementationn of SelectedEventCategories).
 -}
 type SelectedEventCategories
-    = TODOCompleteThisType
+    = SelectedEventCategories (List EventCategory)
 
 
 {-| Returns an instance of `SelectedEventCategories` with all categories selected
@@ -29,8 +36,7 @@ type SelectedEventCategories
 -}
 allSelected : SelectedEventCategories
 allSelected =
-    TODOCompleteThisType
-    -- Debug.todo "Implement Model.Event.Category.allSelected"
+    SelectedEventCategories [Academic, Work, Project, Award]
 
 
 {-| Given a the current state and a `category` it returns whether the `category` is selected.
@@ -40,8 +46,10 @@ allSelected =
 -}
 isEventCategorySelected : EventCategory -> SelectedEventCategories -> Bool
 isEventCategorySelected category current =
-    False
-    -- Debug.todo "Implement Model.Event.Category.isEventCategorySelected"
+    let
+        (SelectedEventCategories selectedList) = current
+    in
+        selectedList |> List.member category
 
 
 {-| Given an `category`, a boolean `value` and the current state, it sets the given `category` in `current` to `value`.
@@ -53,8 +61,15 @@ isEventCategorySelected category current =
 -}
 set : EventCategory -> Bool -> SelectedEventCategories -> SelectedEventCategories
 set category value current =
-    current
-    -- Debug.todo "Implement Model.Event.Category.set"
+    let
+        (SelectedEventCategories selectedList) = current
+    in
+        if value && not (List.member category selectedList) then
+            SelectedEventCategories (category :: selectedList)
+        else if not value then
+            selectedList |> List.filter (\c -> c /= category)
+                         |> SelectedEventCategories
+        else current
 
 
 checkbox : String -> Bool -> EventCategory -> Html ( EventCategory, Bool )

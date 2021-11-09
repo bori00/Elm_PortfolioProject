@@ -16,14 +16,21 @@ type alias Repo =
 
 view : Repo -> Html msg
 view repo =
-    div [] []
-    -- Debug.todo "Implement Model.Repo.view"
+    div [class "repo"] [
+        h1 [class "repo-name"] [text repo.name],
+        p [class "repo-description"] [text (repo.description |> Maybe.withDefault "")],
+        div [class "repo-url"] [
+            a [href repo.url] [text "link"]
+        ],
+        p [class "repo-stars"] [
+            text ("stars: " ++ String.fromInt(repo.stars))
+        ]
+    ]
 
 
 sortByStars : List Repo -> List Repo
 sortByStars repos =
-    []
-    -- Debug.todo "Implement Model.Repo.sortByStars"
+    List.sortWith (\repo1 repo2 -> (Basics.compare repo1.stars repo2.stars)) repos
 
 
 {-| Deserializes a JSON object to a `Repo`.

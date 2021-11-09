@@ -49,7 +49,9 @@ update msg model =
             ( model, Cmd.none )
 
         GotRepos res ->
-            ( model, Cmd.none )
+            case res of
+                Err _ -> (model, Cmd.none)
+                Ok repo_list -> ({model | repos = repo_list}, Cmd.none)
 
         SelectEventCategory category ->
             ({model | selectedEventCategories =

@@ -51,9 +51,6 @@ getRepos = Http.get
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    let
-        tester = Debug.log "dump tuple" model.repos
-    in
     case msg of
         GetRepos ->
             ( model, getRepos )

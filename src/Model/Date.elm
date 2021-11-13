@@ -1,6 +1,6 @@
 module Model.Date exposing (Date, Month(..), compare, compareMonth, full, month, monthToString, monthsBetween, monthsBetweenMonths, offsetMonths, onlyYear, view, year)
 
-import Html exposing (Html, text)
+import Html exposing (Html, div, text, p)
 import Model.Util exposing (chainCompare)
 
 
@@ -51,9 +51,24 @@ The month fields are handled as follows:
 -}
 monthsBetween : Date -> Date -> Maybe Int
 monthsBetween dA dB =
-    -- Nothing
-    Debug.todo "Implement Date.monthsBetween"
+    let
+        (Date dateA) = dA
+        (Date dateB) = dB
+        (mMonthA, yearA) = (dateA.month, dateA.year)
+        (mMonthB, yearB) = (dateB.month, dateB.year)
+    in
+        case (mMonthA, mMonthB) of
+            (Just monthA, Just monthB) ->
+                Just (abs ((monthsSince1AD yearA monthA) - (monthsSince1AD yearB monthB)))
+            (Nothing, Nothing) -> Just ((abs (yearA - yearB)) * 12)
+            (_, _) -> Nothing
 
+{-| Given an integer representing a year and a Month, returns the total number of
+ months passed since January 1, AD until the given date.
+-}
+monthsSince1AD : Int -> Month -> Int
+monthsSince1AD y m =
+    y * 12 + (monthToInt m)
 
 {-| Compares two dates.
 First, dates are compared by the year field. If it's equal, the month fields are used as follows:
@@ -76,8 +91,14 @@ First, dates are compared by the year field. If it's equal, the month fields are
 -}
 compare : Date -> Date -> Order
 compare (Date d1) (Date d2) =
-    -- EQ
-    Debug.todo "Implement Model.Date.compare"
+    let
+        (mMonth1, year1) = (d1.month, d1.year)
+        (mMonth2, year2) = (d2.month, d2.year)
+    in
+        chainCompare (Basics.compare
+                        (mMonth1 |> Maybe.map monthToInt |> Maybe.withDefault 13)
+                        (mMonth2 |> Maybe.map monthToInt |> Maybe.withDefault 13))
+                     (Basics.compare year1 year2)
 
 
 {-| Given a current date and the number of months, it returns a new date with the given number of months passed.
@@ -114,9 +135,10 @@ offsetMonths months (Date d) =
 
 view : Date -> Html msg
 view (Date d) =
-    -- div [] []
-    Debug.todo "Implement Model.Date.view"
-
+    text (d.month |> Maybe.map monthToString
+                  |> Maybe.map (String.append ", ")
+                  |> Maybe.withDefault ""
+                  |> String.append (String.fromInt d.year))
 
 
 -- MONTH

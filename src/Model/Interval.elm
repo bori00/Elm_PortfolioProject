@@ -1,7 +1,7 @@
 module Model.Interval exposing (Interval, compare, full, length, oneYear, open, view, withDurationMonths, withDurationYears)
 
-import Html exposing (Html, div, p, text)
-import Html.Attributes exposing (class, style)
+import Html exposing (Html, br, div, p, span, text)
+import Html.Attributes exposing (class, hidden, style)
 import Model.Date as Date exposing (Date, Month)
 import Model.Util exposing (chainCompare)
 
@@ -96,11 +96,40 @@ If the `start` field is equal, the they are compare by the `end` fields:
 -}
 compare : Interval -> Interval -> Order
 compare (Interval intA) (Interval intB) =
-    -- EQ
-    Debug.todo "Implement Model.Interval.compare"
+    let
+        end_order = case (intA.end, intB.end) of
+                        (Nothing, Nothing) -> EQ
+                        (Just d, Nothing) -> LT
+                        (Nothing, Just d) -> GT
+                        (Just d1, Just d2) -> Date.compare d1 d2
+    in
+    chainCompare
+        (end_order)
+        (Date.compare intA.start intB.start)
 
 
 view : Interval -> Html msg
 view interval =
-    -- div [] []
-    Debug.todo "Implement Model.Interval.view"
+    let
+        (Interval intervalRec) = interval
+        hide_length = case intervalRec.end of
+                            Nothing -> True
+                            Just end -> False
+        interval_length_msg = length interval
+            |> Maybe.map (\l ->
+                (text ((String.fromInt (Tuple.first(l))) ++ " years, " ++
+                    (String.fromInt (Tuple.second(l)) ++ " months"))))
+            |> Maybe.withDefault (text "")
+    in
+    div [class "interval"] [
+        div [style "font-size" "16px"] [
+            span [class "interval-start", style "display" "inline"] [Date.view intervalRec.start],
+            span [style "display" "inline"] [text "  -  "],
+            span [class "interval-end", style "display" "inline"] [intervalRec.end
+                                            |> Maybe.map Date.view
+                                            |> Maybe.withDefault (text "Present")]
+        ],
+        div [class "interval-length", hidden hide_length] [
+            interval_length_msg
+        ]
+    ]

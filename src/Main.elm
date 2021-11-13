@@ -10,7 +10,8 @@ import Model exposing (..)
 import Model.Event as Event
 import Model.Event.Category as EventCategory
 import Model.PersonalDetails as PersonalDetails
-import Model.Repo as Repo
+import Model.Repo as Repo exposing (decodeRepo)
+import Json.Decode as Dec
 
 
 type Msg
@@ -33,7 +34,7 @@ main =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , Cmd.none
+    , getRepos
     )
 
 
@@ -41,21 +42,33 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
+getRepos : Cmd Msg
+getRepos = Http.get
+    { url = "https://api.github.com/users/bori00/repos"
+    , expect = Http.expectJson GotRepos (Dec.list decodeRepo)
+    }
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetRepos ->
-            ( model, Cmd.none )
+            ( model, getRepos )
 
         GotRepos res ->
-            ( model, Cmd.none )
+            case res of
+                Err _ -> (model, Cmd.none)
+                Ok repo_list -> ({model | repos = repo_list}, Cmd.none)
 
         SelectEventCategory category ->
-            ( model, Cmd.none )
+            ({model | selectedEventCategories =
+                        EventCategory.set category True model.selectedEventCategories},
+                Cmd.none)
 
         DeselectEventCategory category ->
-            ( model, Cmd.none )
+            ({model | selectedEventCategories =
+                        EventCategory.set category False model.selectedEventCategories},
+               Cmd.none)
 
 
 eventCategoryToMsg : ( EventCategory.EventCategory, Bool ) -> Msg

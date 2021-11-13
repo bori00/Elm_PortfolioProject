@@ -37,7 +37,6 @@ sortByInterval : List Event -> List Event
 sortByInterval events =
     List.sortWith (\evt1 evt2 -> Interval.compare evt1.interval evt2.interval) events
 
-
 view : Event -> Html Never
 view event =
     let

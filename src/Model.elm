@@ -19,17 +19,17 @@ type alias Model =
 
 academicEvents : List Event
 academicEvents =
-    [ { title = "Academic event 1"
-      , interval = Interval.withDurationYears (Date.onlyYear 2016) 4
-      , description = p [] [ text "I obtained ", b [] [ text "very" ], text " good grades." ]
+    [ { title = "Started Studying at the Technical University of Cluj-Napoca"
+      , interval = Interval.open (Date.full 2019 Date.Oct)
+      , description = p [] [ text "GPA: 9.90" ]
       , category = Academic
-      , url = Nothing
+      , url = Just "https://www.utcluj.ro/"
       , tags = []
-      , important = False
+      , important = True
       }
-    , { title = "Academic event 2"
-      , interval = Interval.withDurationYears (Date.onlyYear 2020) 2
-      , description = div [] []
+    , { title = "Studied at the Báthory István High School"
+      , interval = Interval.withDurationYears (Date.onlyYear 2007) 12
+      , description = div [] [ text "Main subjects: mathematics, informatics"]
       , category = Academic
       , url = Nothing
       , tags = []
@@ -40,48 +40,32 @@ academicEvents =
 
 workEvents : List Event
 workEvents =
-    [ { title = "Work event 1"
-      , interval = Interval.withDurationMonths 2019 Date.Jun 3
-      , description = text "Internship"
+    [ { title = "STEP intern at Google"
+      , interval = Interval.withDurationMonths 2020 Date.Jul 3
+      , description = text "Internship, with a focus on web development"
       , category = Work
       , url = Nothing
-      , tags = []
+      , tags = ["Full-Stack", "Java", "JavaScript", "Google AppEngine", "Maps API"]
       , important = False
       }
-    , { title = "Work event 2"
-      , interval = Interval.open (Date.full 2020 Date.Sep)
-      , description = text "Junior position"
+    , { title = "SRE intern at Google"
+      , interval = Interval.withDurationMonths 2021 Date.Jun 3
+      , description = text "Internship, with a focus in big data and data analysis"
       , category = Work
       , url = Nothing
-      , tags = []
-      , important = False
+      , tags = ["MapReduce", "Flume", "C++", "Python"]
+      , important = True
       }
     ]
 
 
 projectEvens : List Event
 projectEvens =
-    [ { title = "Personal project 1"
-      , interval = Interval.oneYear 2018
-      , description = text "Small app in Java"
+    [ { title = "Robert Bosch scholarship recipient"
+      , interval = Interval.open (Date.full 2021 Date.Nov)
+      , description = text "Working on a project related to big data and data science"
       , category = Project
-      , url = Nothing
-      , tags = []
-      , important = False
-      }
-    , { title = "Personal project 2"
-      , interval = Interval.oneYear 2020
-      , description = text "Command line utility in C"
-      , category = Project
-      , url = Nothing
-      , tags = []
-      , important = False
-      }
-    , { title = "Personal project 3"
-      , interval = Interval.oneYear 2020
-      , description = text "Movie database for License thesis"
-      , category = Project
-      , url = Nothing
+      , url = Just "https://www.bosch.ro/compania-noastra/bosch-in-romania/centrul-de-inginerie-bosch/"
       , tags = []
       , important = False
       }
@@ -90,10 +74,12 @@ projectEvens =
 
 personalDetails : PersonalDetails
 personalDetails =
-    { name = "John Doe"
-    , intro = "I like computers"
-    , contacts = [ DetailWithName "email" "john@domain.com" ]
-    , socials = [ DetailWithName "github" "https://github.com/octocat" ]
+    { name = "Borbála Fazakas"
+    , intro = "I want to make the world a better place through intelligent software"
+    , contacts = [ DetailWithName "email" "bori@utcn.com",
+                   DetailWithName "phone" "0741123456" ]
+    , socials = [ DetailWithName "github" "https://github.com/bori00",
+                  DetailWithName "LinkedIn" "https://www.linkedin.com/in/borbalafazakas318695189/"]
     }
 
 

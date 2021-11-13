@@ -97,12 +97,14 @@ If the `start` field is equal, the they are compare by the `end` fields:
 compare : Interval -> Interval -> Order
 compare (Interval intA) (Interval intB) =
     let
-        default_end_order = case (intA.end, intB.end) of
-                                (Nothing, Nothing) -> EQ
-                                (_, _) -> GT
+        end_order = case (intA.end, intB.end) of
+                        (Nothing, Nothing) -> EQ
+                        (Just d, Nothing) -> LT
+                        (Nothing, Just d) -> GT
+                        (Just d1, Just d2) -> Date.compare d1 d2
     in
     chainCompare
-        (Maybe.map2 Date.compare intA.end intB.end |> Maybe.withDefault default_end_order)
+        (end_order)
         (Date.compare intA.start intB.start)
 
 

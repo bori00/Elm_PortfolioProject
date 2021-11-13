@@ -17,7 +17,7 @@ type alias Repo =
 view : Repo -> Html msg
 view repo =
     div [class "repo"] [
-        h1 [class "repo-name"] [text repo.name],
+        h3 [class "repo-name"] [text repo.name],
         p [class "repo-description"] [text (repo.description |> Maybe.withDefault "")],
         div [class "repo-url"] [
             a [href repo.url] [text "link"]
@@ -27,10 +27,11 @@ view repo =
         ]
     ]
 
-
+{-| Based on the context, I assumed that sortByStars needs to sort in descending order.
+-}
 sortByStars : List Repo -> List Repo
 sortByStars repos =
-    List.sortWith (\repo1 repo2 -> (Basics.compare repo1.stars repo2.stars)) repos
+    List.sortWith (\repo1 repo2 -> (Basics.compare repo2.stars repo1.stars)) repos
 
 
 {-| Deserializes a JSON object to a `Repo`.

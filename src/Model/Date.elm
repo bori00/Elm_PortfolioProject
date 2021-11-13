@@ -49,7 +49,6 @@ The month fields are handled as follows:
 ```
 
 -}
--- TODO: if both missing -> number of years * 12?
 monthsBetween : Date -> Date -> Maybe Int
 monthsBetween dA dB =
     let
@@ -137,9 +136,9 @@ offsetMonths months (Date d) =
 view : Date -> Html msg
 view (Date d) =
     text (d.month |> Maybe.map monthToString
-                        |> Maybe.map (String.append ", ")
-                        |> Maybe.withDefault ""
-                        |> String.append (String.fromInt d.year))
+                  |> Maybe.map (String.append ", ")
+                  |> Maybe.withDefault ""
+                  |> String.append (String.fromInt d.year))
 
 
 -- MONTH
